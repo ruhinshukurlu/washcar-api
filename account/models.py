@@ -26,6 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         message='Phone number must be in the format +994XXXXXXXXX'
     )
 
+    fullname = models.CharField("Full Name", max_length=50, blank=True, null=True)
     phone_number = models.CharField(
         max_length=15,
         unique=True,
