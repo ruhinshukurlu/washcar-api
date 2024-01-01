@@ -2,6 +2,7 @@ import re
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import uuid
 
 class UserManager(BaseUserManager):
     def create_user(self, phone_number, password=None, **extra_fields):
@@ -26,6 +27,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         message='Phone number must be in the format +994XXXXXXXXX'
     )
 
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     fullname = models.CharField("Full Name", max_length=50, blank=True, null=True)
     phone_number = models.CharField(
         max_length=15,

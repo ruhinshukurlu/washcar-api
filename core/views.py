@@ -1,13 +1,19 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
-# Create your views here.
+from rest_framework.permissions import AllowAny
 
-class ListUsers(APIView):
+from core.models import Company
+from core.serializers import CompanySerializer
 
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        usernames = ['salam']
-        return Response(usernames)
+
+class CompanyListView(ListAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+    permission_classes = (AllowAny, )
+
+
+class CompanyCreateAPIView(CreateAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+    permission_classes = (AllowAny, )

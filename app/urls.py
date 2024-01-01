@@ -41,7 +41,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path(f'{BASE_URL}/auth/', include(('account.urls', 'Account'), namespace='account')),
-    path(f'{BASE_URL}/core/', include(('core.urls', 'Core'), namespace='core')),
+    path(f'{BASE_URL}/', include(('core.urls', 'Core'), namespace='core')),
 
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     "corsheaders",
+    'django_json_widget',
     'drf_yasg',
     'core',
     'account',
@@ -96,8 +97,8 @@ DATABASES = {
     }
 }
 
-if DEBUG:
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# if DEBUG:
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

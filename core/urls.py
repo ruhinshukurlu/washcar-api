@@ -1,9 +1,9 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenRefreshView
-from core.views import ListUsers
+from core.views import CompanyListView, CompanyCreateAPIView
 
 app_name = 'core'
 
 urlpatterns = [
-    path('',ListUsers.as_view(), name='home'),
+    path('company/list',CompanyListView.as_view(), name='company-list'),
+    path('company/create',CompanyCreateAPIView.as_view(), name='company-create'),
 ]
