@@ -45,3 +45,13 @@ class ReservationListApiView(ListAPIView):
     def get_queryset(self):
         current_user = self.request.user
         return super().get_queryset().filter(user=current_user)
+
+
+class CreateReviewApiView(CreateAPIView):
+    queryset = CompanyReview.objects.all()
+    serializer_class = CompanyReviewSerilizer
+    permission_classes = (IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        return super().perform_create(serializer)

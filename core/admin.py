@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Company, Reservation
+from core.models import Company, Reservation, CompanyReview
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
 
@@ -10,3 +10,4 @@ class YourModelAdmin(admin.ModelAdmin):
     }
 
 admin.site.register(Reservation)
+admin.site.register(CompanyReview)

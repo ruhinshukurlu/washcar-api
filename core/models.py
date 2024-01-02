@@ -22,6 +22,23 @@ class Company(models.Model):
         return self.name
 
 
+class CompanyReview(models.Model):
+
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    company = models.ForeignKey("core.Company", verbose_name="Company", on_delete=models.CASCADE, related_name='reviews')
+    reservation = models.OneToOneField("core.Reservation", verbose_name="Reservation", on_delete=models.CASCADE, related_name='review')
+    user = models.ForeignKey("account.User", verbose_name="User", on_delete=models.CASCADE, related_name='reviews')
+    rating = models.IntegerField("Rating", default=0)
+    text = models.TextField("Text", blank=True, null=True)
+
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+    updated_at = models.DateTimeField("Updated at", auto_now=True)
+    is_active = models.BooleanField("Is Active", default=True)
+
+    def __str__(self) -> str:
+        return self.company.name
+
+
 class Reservation(models.Model):
     CAR_TYPE_CHOICES = (
         ('sedan', 'Sedan'),
@@ -44,4 +61,4 @@ class Reservation(models.Model):
 
 
     def __str__(self) -> str:
-        return self.company.name
+        return self.company.name + str(self.user) + str(self.date)
