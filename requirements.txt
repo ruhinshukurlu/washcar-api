@@ -2,9 +2,11 @@ asgiref==3.7.2
 dj-database-url==2.1.0
 Django==5.0
 django-cors-headers==4.3.1
+django-json-widget==1.1.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
 drf-yasg==1.21.7
+future==0.18.3
 inflection==0.5.1
 packaging==23.2
 Pillow==10.1.0
