@@ -5,7 +5,7 @@ import uuid
 class Company(models.Model):
 
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    user = models.ForeignKey("account.User", verbose_name="User", on_delete=models.CASCADE)
+    user = models.OneToOneField("account.User", verbose_name="User", on_delete=models.CASCADE, related_name='company')
     name = models.CharField("Name", max_length=50)
     coordinates = models.JSONField("Coordinates")
     logo = models.ImageField("Logo", upload_to='logos/', blank=True, null=True)
@@ -31,8 +31,8 @@ class Reservation(models.Model):
     )
 
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    user = models.ForeignKey("account.User", verbose_name="User", on_delete=models.CASCADE)
-    company = models.ForeignKey("core.Company", verbose_name="Company", on_delete=models.CASCADE)
+    user = models.ForeignKey("account.User", verbose_name="User", on_delete=models.CASCADE, related_name='reservations')
+    company = models.ForeignKey("core.Company", verbose_name="Company", on_delete=models.CASCADE, related_name='reservations')
     date = models.DateField("Date")
     time = models.TimeField("Time")
     car_type = models.CharField("Car Type", choices=CAR_TYPE_CHOICES, default='sedan', max_length=50)
