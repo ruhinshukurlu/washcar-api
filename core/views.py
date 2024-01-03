@@ -55,3 +55,12 @@ class CreateReviewApiView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         return super().perform_create(serializer)
+
+
+class CarTypeListApiView(ListAPIView):
+    queryset = CarType.objects.all()
+    serializer_class = CarTypeSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)

@@ -11,4 +11,6 @@ urlpatterns = [
 
     path('reservations/create', CreateReservationApiView.as_view(), name='create-reservation'),
     path('reservations/list/', ReservationListApiView.as_view(), name='reservation-list'),
+
+    path('cartype/list/', CarTypeListApiView.as_view(), name='cartype-list'),
 ]

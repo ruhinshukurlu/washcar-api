@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Company, Reservation, CompanyReview
+from core.models import Company, Reservation, CompanyReview, CarType
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -23,8 +23,14 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
         return 0
 
 
-class ReservationSerializer(serializers.ModelSerializer):
+class CarTypeSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = CarType
+        fields = ['id','title']
+
+
+class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = ['id', 'company', 'date', 'time', 'car_type', 'detail']
@@ -33,6 +39,7 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class ReservationListSerializer(serializers.ModelSerializer):
     company = CompanySerializer()
+    car_type = CarTypeSerializer()
     class Meta:
         model = Reservation
         fields = ['id', 'company', 'date', 'time', 'car_type', 'detail']
@@ -50,3 +57,4 @@ class CompanyReviewSerilizer(serializers.ModelSerializer):
             raise serializers.ValidationError(detail="Rating should be between 0 - 5!")
 
         return super().validate(data)
+

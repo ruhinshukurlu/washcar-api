@@ -52,7 +52,7 @@ class Reservation(models.Model):
     company = models.ForeignKey("core.Company", verbose_name="Company", on_delete=models.CASCADE, related_name='reservations')
     date = models.DateField("Date")
     time = models.TimeField("Time")
-    car_type = models.CharField("Car Type", choices=CAR_TYPE_CHOICES, default='sedan', max_length=50)
+    car_type = models.ForeignKey("core.CarType", verbose_name="Car Type", on_delete=models.CASCADE, related_name='reservations')
     detail = models.TextField("Detail", blank=True, null=True)
 
     created_at = models.DateTimeField("Created At", auto_now_add=True)
@@ -62,3 +62,16 @@ class Reservation(models.Model):
 
     def __str__(self) -> str:
         return self.company.name + str(self.user) + str(self.date)
+
+
+class CarType(models.Model):
+
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    title = models.CharField("Title", max_length=50)
+
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+    updated_at = models.DateTimeField("Updated at", auto_now=True)
+    is_active = models.BooleanField("Is Active", default=True)
+
+    def __str__(self) -> str:
+        return self.title
