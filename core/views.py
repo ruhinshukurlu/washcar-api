@@ -2,10 +2,13 @@ from django.shortcuts import render
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.views import APIView
 
 from core.models import Company, Reservation
 from core.serializers import *
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class CompanyListView(ListAPIView):
     queryset = Company.objects.all()
@@ -24,6 +27,29 @@ class CompanyDetailApiView(RetrieveAPIView):
     serializer_class = CompanyDetailSerializer
     permission_classes = (AllowAny, )
     lookup_field = 'id'
+
+
+class CompanyReservations(RetrieveAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanyAvailableHoursSerializer
+    permission_classes = (AllowAny, )
+    lookup_field = 'id'
+
+    # date = openapi.Parameter('start_date', openapi.IN_QUERY,
+    #                          description="Field to filter reservations by start_date, Date format : yyyy-mm-dd",
+    #                          type=openapi.FORMAT_DATE)
+
+
+    # @swagger_auto_schema(manual_parameters=[date])
+    # def get(self, request, *args, **kwargs):
+    #     return super().get(request, *args, **kwargs)
+
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     date = self.request.query_params.get("date", None)
+    #     if date:
+    #         queryset = queryset.filter()
+
 
 
 class CreateReservationApiView(CreateAPIView):
