@@ -8,6 +8,7 @@ urlpatterns = [
     path('company/create/',CompanyCreateAPIView.as_view(), name='company-create'),
     path('company/review/create/',CreateReviewApiView.as_view(), name='company-review-create'),
     path('company/<uuid:id>/',CompanyDetailApiView.as_view(), name='company-detail'),
+    path('company/<uuid:id>/reservations/',CompanyReservations.as_view(), name='company-available-hours'),
 
     path('reservations/create', CreateReservationApiView.as_view(), name='create-reservation'),
     path('reservations/list/', ReservationListApiView.as_view(), name='reservation-list'),

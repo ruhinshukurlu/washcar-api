@@ -10,6 +10,7 @@ class Company(models.Model):
     coordinates = models.JSONField("Coordinates")
     logo = models.ImageField("Logo", upload_to='logos/', blank=True, null=True)
     address = models.CharField("Address", max_length=50, blank=True, null=True)
+    available_car_types = models.ManyToManyField("core.CarType", verbose_name="Available Car Types")
 
     created_at = models.DateTimeField("Created At", auto_now_add=True)
     updated_at = models.DateTimeField("Updated at", auto_now=True)
@@ -54,6 +55,7 @@ class Reservation(models.Model):
     time = models.TimeField("Time")
     car_type = models.ForeignKey("core.CarType", verbose_name="Car Type", on_delete=models.CASCADE, related_name='reservations')
     detail = models.TextField("Detail", blank=True, null=True)
+    car_registration_number = models.CharField("Car Registration Number", max_length=50, blank=True, null=True)
 
     created_at = models.DateTimeField("Created At", auto_now_add=True)
     updated_at = models.DateTimeField("Updated at", auto_now=True)

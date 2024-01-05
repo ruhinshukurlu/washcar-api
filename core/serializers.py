@@ -9,11 +9,18 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = ["id", "user", "name", "coordinates", "logo", "address"]
 
 
+class CarTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CarType
+        fields = ['id','title']
+
 class CompanyDetailSerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
+    available_car_types = CarTypeSerializer(many=True)
     class Meta:
         model = Company
-        fields = ["id", "user", "name",'average_rating',"coordinates", "logo", "address"]
+        fields = ["id", "user", "name",'average_rating',"coordinates", "logo", "address", 'available_car_types']
 
     def get_average_rating(self, company):
         reviews = company.reviews.all()
@@ -22,12 +29,6 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
             return total_rating / len(reviews)
         return 0
 
-
-class CarTypeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CarType
-        fields = ['id','title']
 
 
 class ReservationSerializer(serializers.ModelSerializer):
@@ -45,6 +46,13 @@ class ReservationListSerializer(serializers.ModelSerializer):
         fields = ['id', 'company', 'date', 'time', 'car_type', 'detail']
 
 
+class ReservationDateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Reservation
+        fields = ['id', 'date', 'time']
+
+
 class CompanyReviewSerilizer(serializers.ModelSerializer):
 
     class Meta:
@@ -58,3 +66,10 @@ class CompanyReviewSerilizer(serializers.ModelSerializer):
 
         return super().validate(data)
 
+
+
+class CompanyAvailableHoursSerializer(serializers.ModelSerializer):
+    reservations = ReservationDateSerializer(many=True)
+    class Meta:
+        model = Company
+        fields = ['id', 'name', 'reservations']
