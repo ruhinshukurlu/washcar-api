@@ -7,9 +7,6 @@ from rest_framework.views import APIView
 from core.models import Company, Reservation
 from core.serializers import *
 
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-
 class CompanyListView(ListAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
