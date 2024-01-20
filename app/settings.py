@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     "corsheaders",
     'django_json_widget',
-    'drf_yasg',
+    'drf_spectacular',
     'core',
     'account',
 ]
@@ -84,7 +84,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 AUTH_USER_MODEL = 'account.User'
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -118,14 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
-    }
+# DRF Settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+}
+
+# Swagger UI Settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Washcar API',
+    'DESCRIPTION': 'API doc',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': r'/api/v[0-9]',
 }
 
 SIMPLE_JWT = {
@@ -158,12 +161,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-}
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
 }
 
 # Internationalization
