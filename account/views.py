@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 
 from account.utils import jwt_decode_handler
-from account.serializer import UserSerializer, UserCreateSerializer
+from account.serializer import UserSerializer, UserCreateSerializer, CustomTokenObtainSerializer
 
 User = get_user_model()
 
@@ -23,6 +23,7 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(TokenObtainPairView):
     permission_classes = (AllowAny,)
+    # serializer_class = CustomTokenObtainSerializer
 
     def post(self, request, *args, **kwargs):
         data = super().post( request, *args, **kwargs)
@@ -31,7 +32,7 @@ class LoginView(TokenObtainPairView):
 
         access_token = jwt_decode_handler(data.get("access"))
         user = User.objects.filter(phone_number=access_token.get("phone_number")).first()
-
+        print("login")
         if not user:
             return Response({"error":True, "message":"No such user!"}, status=status.HTTP_404_NOT_FOUND)
 
