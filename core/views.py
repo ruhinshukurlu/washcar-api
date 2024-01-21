@@ -9,7 +9,7 @@ from core.serializers import *
 
 class CompanyListView(ListAPIView):
     queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+    serializer_class = CompanyDetailSerializer
     permission_classes = (AllowAny, )
 
 
@@ -31,22 +31,6 @@ class CompanyReservations(RetrieveAPIView):
     serializer_class = CompanyAvailableHoursSerializer
     permission_classes = (AllowAny, )
     lookup_field = 'id'
-
-    # date = openapi.Parameter('start_date', openapi.IN_QUERY,
-    #                          description="Field to filter reservations by start_date, Date format : yyyy-mm-dd",
-    #                          type=openapi.FORMAT_DATE)
-
-
-    # @swagger_auto_schema(manual_parameters=[date])
-    # def get(self, request, *args, **kwargs):
-    #     return super().get(request, *args, **kwargs)
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     date = self.request.query_params.get("date", None)
-    #     if date:
-    #         queryset = queryset.filter()
-
 
 
 class CreateReservationApiView(CreateAPIView):
